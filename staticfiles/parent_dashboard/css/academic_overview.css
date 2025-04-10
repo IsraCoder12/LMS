@@ -1,0 +1,26 @@
+/* ✅ Define Variables */
+:root {
+    --orange: #f8951f;
+    --blue: #264c84;
+    --green: #8ec241;
+}
+
+/* ✅ Apply Colors */
+.text-blue {
+    background-color: var(--blue) !important;
+    color: white !important;
+}
+
+.text-orange {
+    color: var(--orange) !important;
+}
+
+.bg-green {
+    background-color: var(--green) !important;
+    color: white !important;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+

@@ -1,0 +1,67 @@
+:root {
+    --orange: #f8951f;
+    --blue: #264c84;
+    --green: #8ec241;
+}
+
+.performance-container {
+    width: 80%;
+    margin: 1rem auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.performance-title {
+    color: var(--blue);
+    margin-bottom: 2rem;
+}
+
+.subject-box {
+    border: 2px solid var(--green); /* Using green for subject boxes */
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: left; /* Align text within the box to the left for better readability */
+}
+
+.subject-box:hover {
+    transform: scale(1.03);
+    border-color: var(--orange); /* Hover effect with orange */
+}
+
+.subject-name {
+    color: var(--blue);
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.marks {
+    color: var(--orange);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.total-marks {
+    color: var(--blue);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.grade {
+    color: var(--green);
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.grade-value {
+    color: black;
+}
+
+.improvement {
+    color: #dc3545; /* A red color to highlight if improvement is needed */
+}

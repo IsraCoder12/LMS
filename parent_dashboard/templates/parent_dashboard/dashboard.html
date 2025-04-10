@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- import icon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'parent_dashboard/css/dashboard.css' %}">
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <ul class="list-unstyled components">
+                <li class="nav-item">
+                    <a href="#"><i class="bx bxs-home"></i> <span class="text">Home</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'parent_dashboard:academic_overview' %}"><i class='bx bxs-graduation'></i> <span class="text">Student Academic Overview</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'parent_dashboard:subject_performance' %}"><i class='bx bx-trending-up' ></i> <span class="text">Subject-wise Performance</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'parent_dashboard:subject_graphs' %}"><i class='bx bxs-calendar'></i> <span class="text">Grade Trends</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class='bx bx-grid'></i><span class="text">Attendence & Participation</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class='bx bx-message-dots' ></i> <span class="text">Teacher feedback & comments</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="bx bx-bell"></i> <span class="text">Notification & Alerts</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class='bx bxs-message' ></i> <span class="text">Parent teacher Communication portal</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="bx bx-bell"></i> <span class="text">Switch child Profile</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i class="bx bx-cloud-download"></i> <span class="text">Download</span></a>
+                </li>
+                <li class="nav-item logout">
+                    <a href="{% url 'logout' %}">
+                        <i class="bx bx-log-in-circle"></i> 
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div id="content">
+            <h2>Welcome, {{ user.username }}</h2>
+            <p>This is your main content area.</p>
+        </div>
+    </div>
+
+</body>
+</html>

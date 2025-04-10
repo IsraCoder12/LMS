@@ -1,0 +1,75 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'parent_dashboard/css/subject_graphs.css' %}">
+
+{% block content %}
+<div class="performance-graphs-container">
+    <h1 class="performance-graphs-title">Subject Performance Graphs</h1>
+
+    <div id="graph-container">
+        </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const subjectData = JSON.parse('{{ subject_data_for_graphs|safe }}');
+    const graphContainer = document.getElementById('graph-container');
+
+    subjectData.forEach(data => {
+      const subjectDiv = document.createElement('div');
+      subjectDiv.classList.add('subject-graph-item');
+
+      const heading = document.createElement('h3');
+      heading.textContent = `${data.subject_name} Performance`;
+      subjectDiv.appendChild(heading);
+
+      const canvas = document.createElement('canvas');
+      canvas.id = `subjectChart_${data.subject_id}`;
+      canvas.width = 400;
+      canvas.height = 300;
+      subjectDiv.appendChild(canvas);
+
+      graphContainer.appendChild(subjectDiv);
+
+      const ctx = canvas.getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Assignments', 'Quizzes', 'Midterm', 'Final Exam'],
+          datasets: [{
+            label: 'Marks',
+            data: [
+              data.assignment_marks,
+              data.quiz_marks,
+              data.midterm_marks,
+              data.final_exam_marks
+            ],
+            backgroundColor: getSubjectColor(data.subject_name),
+            borderColor: getSubjectColor(data.subject_name),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+
+    function getSubjectColor(subjectName) {
+      if (subjectName === 'Mathematics') {
+        return 'rgba(38, 76, 132, 0.8)'; // Blue
+      } else if (subjectName === 'Science') {
+        return 'rgba(248, 149, 31, 0.8)'; // Orange
+      } else if (subjectName === 'English') {
+        return 'rgba(142, 194, 65, 0.8)'; // Green
+      } else {
+        return 'rgba(0, 0, 0, 0.7)'; // Default color
+      }
+    }
+  });
+</script>
+{% endblock %}

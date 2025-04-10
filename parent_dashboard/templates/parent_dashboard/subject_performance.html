@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'parent_dashboard/css/subject_performance.css' %}">
+{% block content %}
+<div class="performance-container">
+    <h1 class="performance-title">Subject-Wise Performance</h1>
+
+    {% if subject_performances %}
+        {% for performance in subject_performances %}
+            <div class="subject-box">
+                <h3 class="subject-name">{{ performance.subject.name }}</h3>
+                <p class="marks">
+                    <strong>Assignments:</strong> {{ performance.assignment_marks }} |
+                    <strong>Quizzes:</strong> {{ performance.quiz_marks }} |
+                    <strong>Midterm:</strong> {{ performance.midterm_marks }} |
+                    <strong>Final Exam:</strong> {{ performance.final_exam_marks }}
+                </p>
+                <p class="total-marks"><strong>Total Marks:</strong> {{ performance.total_marks }}</p>
+                <p class="grade"><strong>Grade:</strong> <span class="grade-value">{{ performance.grade }}</span></p>
+                {% if performance.improvement_needed %}
+                    <p class="improvement"><strong>Improvement Needed:</strong> Yes</p>
+                {% else %}
+                    <p class="improvement"><strong>Improvement Needed:</strong> No</p>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No subject performance data available for this student.</p>
+        {% endfor %}
+    {% else %}
+        <p>No subject performance data found.</p>
+    {% endif %}
+</div>
+{% endblock %}

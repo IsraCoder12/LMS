@@ -1,0 +1,50 @@
+:root {
+    --orange: #f8951f;
+    --blue: #264c84;
+    --green: #8ec241;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.overview-container {
+    width: 80%;
+    margin: 1rem auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.overview-title {
+    color: var(--blue);
+    margin-bottom: 2rem;
+}
+
+.semester-box {
+    border: 2px solid var(--green);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.semester-box:hover {
+    transform: scale(1.03);
+    border-color: var(--orange);
+}
+
+.semester-box h3 {
+    color: var(--orange);
+    margin-bottom: 1rem;
+}
+
+.semester-box p {
+    color: var(--blue);
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}

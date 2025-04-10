@@ -1,0 +1,16 @@
+:root {
+    --orange: #f8951f;
+    --blue: #264c84;
+    --green: #8ec241;
+}
+
+.performance-graphs-container {
+    width: 80%;
+    margin: 1rem auto;
+    padding: 1rem;
+    text-align: center;
+}
+.performance-graphs-title {
+    color: var(--blue);
+    margin-bottom: 2rem;
+}

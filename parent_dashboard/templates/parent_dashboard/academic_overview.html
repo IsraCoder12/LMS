@@ -1,0 +1,19 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'parent_dashboard/css/academic_overview.css' %}">
+{% block content %}
+
+<div class="overview-container">
+    <h1 class="overview-title">Student Academic Overview</h1>
+
+    {% for semester in semesters %}
+    <div class="semester-box">
+        <h3>{{ semester.semester_name }} {{ semester.year }}</h3>
+        <p><strong>GPA:</strong> {{ semester.gpa }}</p>
+        <p><strong>CGPA:</strong> {{ semester.cgpa }}</p>
+        <p><strong>Grade:</strong> {{ semester.overall_grade }}</p>
+    </div>
+    {% empty %}
+    <p>No semester records found.</p>
+    {% endfor %}
+</div>
+{% endblock %}
