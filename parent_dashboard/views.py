@@ -142,3 +142,36 @@ def subject_graphs_view(request):
     return render(request, 'parent_dashboard/subject_graphs.html', context)
 
 #88888888888888888888888888888 The end 888888888888888888888888888888888888888888888888888
+
+
+
+#*****************************View Attendance Tracking model*****************************
+from django.shortcuts import render
+from .models import Attendance
+from .utils import calculate_monthly_attendance  # Importing the function
+
+def show_attendance(request, student_id, month, year):
+    # Student ko get karen
+    student = User.objects.get(id=student_id)
+    
+    # Monthly attendance calculate karen
+    attendance_percentage = calculate_monthly_attendance(student, month, year)
+    
+    # Attendance records fetch karen
+    attendance_records = Attendance.objects.filter(
+        student=student,
+        date__month=month,
+        date__year=year
+    )
+
+    context = {
+        'attendance_records': attendance_records,
+        'attendance_percentage': attendance_percentage,
+        'student': student,
+        'month': month,
+        'year': year,
+    }
+
+    return render(request, 'attendance/Attendance.html', context)
+
+#************************The end attendance tracking model******************************

@@ -4,6 +4,11 @@
     --blue: #264c84;
     --green: #8ec241;
 }
+.wrapper{
+    background-image: url('static/images/background_image.jpg');
+    background-size: cover; 
+    height: 100vh;
+}
 .content {
     text-align: center;
     display: flex;

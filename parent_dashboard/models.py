@@ -110,4 +110,18 @@ def student_academic_overview(request):
 
 #Suceessfully completed.................
 
-#new model graphical representation subject wise performance
+#new model graphical representation subject wise performance dont need this model at a time .............................................
+#******************************* Attendance model ***************************************************
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Attendance(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)  
+    date = models.DateField() 
+    status = models.BooleanField(default=False) 
+    class_name = models.CharField(max_length=100)  # Optional: to track the class name
+
+    def __str__(self):
+        return f"{self.student} - {self.date} - {'Present' if self.status else 'Absent'}"
+ 
