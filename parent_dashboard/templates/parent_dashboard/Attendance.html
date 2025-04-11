@@ -1,2 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <link rel="stylesheet" href="{% static 'parent_dashboard/css/attendance.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Tracker</h1>
 
-<link rel="stylesheet" href="{% static 'parent_dashboard/css/Attendance.css' %}">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="month">Select Month:</label>
+            <select name="month" id="month">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+
+            <label for="year">Select Year:</label>
+            <select name="year" id="year">
+                <option value="{{ current_year }}">{{ current_year }}</option>
+                <option value="{{ current_year|add:'-1' }}">{{ current_year|add:'-1' }}</option>
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
+
+        <h2>Attendance for {{ current_month }}/{{ current_year }}</h2>
+        <table class="attendance-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendance_data %}
+                    <tr>
+                        <td>{{ attendance.date }}</td>
+                        <td class="{% if attendance.status %}present{% else %}absent{% endif %}">
+                            {% if attendance.status %}Present{% else %}Absent{% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2">No attendance records found for this month/year.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="attendance-summary">
+            <p>Total Classes: {{ attendance_data.count }}</p>
+            <p>Attended Classes: {{ attended_classes }}</p>
+            <p>Attendance Percentage: {{ attendance_percentage }}%</p>
+        </div>
+    </div>
+</body>
+</html>
+

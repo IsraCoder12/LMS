@@ -1,0 +1,98 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #264c84;
+}
+
+form {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+label {
+    font-size: 14px;
+    color: #555;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #f8951f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #8ec241;
+}
+
+h2 {
+    text-align: center;
+    color: #264c84;
+    margin-top: 20px;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.attendance-table th, .attendance-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.attendance-table th {
+    background-color: #f8951f;
+    color: white;
+}
+
+.attendance-table td.present {
+    background-color: #8ec241;
+    color: white;
+}
+
+.attendance-table td.absent {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.attendance-summary {
+    font-size: 16px;
+    text-align: center;
+}
+
+.attendance-summary p {
+    margin: 5px 0;
+}

@@ -148,30 +148,77 @@ def subject_graphs_view(request):
 #*****************************View Attendance Tracking model*****************************
 from django.shortcuts import render
 from .models import Attendance
-from .utils import calculate_monthly_attendance  # Importing the function
+from datetime import datetime
 
-def show_attendance(request, student_id, month, year):
-    # Student ko get karen
-    student = User.objects.get(id=student_id)
-    
-    # Monthly attendance calculate karen
-    attendance_percentage = calculate_monthly_attendance(student, month, year)
-    
-    # Attendance records fetch karen
-    attendance_records = Attendance.objects.filter(
-        student=student,
-        date__month=month,
-        date__year=year
+def attendance_view(request):
+    # Default current month and year
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
+    # Default attendance data for the current month
+    attendance_data = Attendance.objects.filter(
+        date__month=current_month,
+        date__year=current_year
     )
 
-    context = {
-        'attendance_records': attendance_records,
+    if request.method == 'POST':
+        month = int(request.POST.get('month'))
+        year = int(request.POST.get('year'))
+
+        # Filter attendance records for selected month/year
+        attendance_data = Attendance.objects.filter(
+            date__month=month,
+            date__year=year
+        )
+
+    # Calculate attendance percentage
+    total_classes = attendance_data.count()
+    attended_classes = attendance_data.filter(status=True).count()
+    if total_classes > 0:
+        attendance_percentage = (attended_classes / total_classes) * 100
+    else:
+        attendance_percentage = 0.0
+
+    return render(request, 'parent_dashboard/attendance.html', {
+        'attendance_data': attendance_data,
         'attendance_percentage': attendance_percentage,
-        'student': student,
-        'month': month,
-        'year': year,
+        'current_month': current_month,
+        'current_year': current_year,
+    })
+
+
+#************************The end attendance tracking view********************************
+
+
+#************************ Feedback and request view *************************************
+from django.shortcuts import render
+from .models import Feedback
+from .forms import MeetingRequestForm
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def feedback_and_meeting_view(request):
+    student = request.user  # Assuming request.user is the student
+
+    # Feedbacks
+    feedbacks = Feedback.objects.filter(student=student).order_by('-date_created')
+
+    # Meeting Request Form
+    if request.method == 'POST':
+        form = MeetingRequestForm(request.POST)
+        if form.is_valid():
+            meeting = form.save(commit=False)
+            meeting.parent = request.user
+            meeting.student = student  # same as request.user
+            meeting.save()          
+    else:
+        form = MeetingRequestForm()
+
+    context = {
+        'feedbacks': feedbacks,
+        'form': form
     }
 
-    return render(request, 'attendance/Attendance.html', context)
+    return render(request, 'parent_dashboard/feedback_meeting.html', context)
 
-#************************The end attendance tracking model******************************
+#**************************************************************The end view feedbak anfd request view

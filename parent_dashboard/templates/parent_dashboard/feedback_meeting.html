@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'parent_dashboard/css/feedback_meeting.css' %}">
+{% block content %}
+<h2>Teacher Feedback</h2>
+<ul>
+    {% for fb in feedbacks %}
+        <li><strong>{{ fb.teacher.username }}</strong> ({{ fb.date_created|date:"d M Y" }}):<br>{{ fb.message }}</li>
+    {% empty %}
+        <li>No feedback available.</li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h2>Request Meeting with Teacher</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send Request</button>
+</form>
+{% endblock %}

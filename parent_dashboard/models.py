@@ -11,7 +11,7 @@ class Semester(models.Model):
 
     student = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'groups__name': 'Students'})
     semester_name = models.CharField(max_length=10, choices=SEMESTER_CHOICES)  # "Spring", "Fall", or "Summer"
-    year = models.IntegerField()  # Stores 2025, 2024, etc.
+    year = models.IntegerField()  # example 2025, 2024,
     gpa = models.FloatField(default=0.0)
     cgpa = models.FloatField(default=0.0)
     overall_grade = models.CharField(max_length=2)  # e.g. 'A', 'B', 'C'
@@ -82,6 +82,7 @@ class ParentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=15, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
+    
 
     def __str__(self):
         return self.user.username
@@ -120,8 +121,37 @@ class Attendance(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)  
     date = models.DateField() 
     status = models.BooleanField(default=False) 
-    class_name = models.CharField(max_length=100)  # Optional: to track the class name
+    class_name = models.CharField(max_length=100)  #optional 
 
     def __str__(self):
         return f"{self.student} - {self.date} - {'Present' if self.status else 'Absent'}"
  
+#******************************************************************The end Attendance Model
+
+#******************Feedback and Request model *********************************************
+from django.db import models
+from django.contrib.auth.models import User
+
+class Feedback(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks_as_student')
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='feedbacks_as_teacher')
+    message = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback for {self.student} by {self.teacher}"
+
+class MeetingRequest(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='meeting_requests_as_student')
+    parent = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_staff': False}, related_name='meeting_requests_as_parent')
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='meeting_requests_as_teacher')
+    message = models.TextField(blank=True)
+    preferred_date = models.DateField()
+    status_choices = [('Pending', 'Pending'), ('Accepted', 'Accepted'), ('Rejected', 'Rejected')]
+    status = models.CharField(max_length=10, choices=status_choices, default='Pending')
+    date_requested = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Meeting Request by {self.parent} for {self.teacher}"
+
+#***************************************************************************The End*****************
