@@ -10,11 +10,11 @@ class Semester(models.Model):
     ]
 
     student = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'groups__name': 'Students'})
-    semester_name = models.CharField(max_length=10, choices=SEMESTER_CHOICES)  # "Spring", "Fall", or "Summer"
-    year = models.IntegerField()  # example 2025, 2024,
+    semester_name = models.CharField(max_length=10, choices=SEMESTER_CHOICES) 
+    year = models.IntegerField()  
     gpa = models.FloatField(default=0.0)
     cgpa = models.FloatField(default=0.0)
-    overall_grade = models.CharField(max_length=2)  # e.g. 'A', 'B', 'C'
+    overall_grade = models.CharField(max_length=2)  
 
     class Meta:
         unique_together = ('student', 'semester_name', 'year')  # Ensures uniqueness per student
@@ -63,7 +63,7 @@ class SubjectPerformance(models.Model):
             return "F"
 
     def check_improvement(self):
-        return self.grade in ["D", "F"]  # Improvement needed for low grades
+        return self.grade in ["D", "F"]  
 
     def save(self, *args, **kwargs):
         self.total_marks = self.calculate_total_marks()
